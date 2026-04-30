@@ -1,29 +1,4 @@
 local AUTOCRAFTS = {
-    {
-        input = "minecraft:oak_planks",
-        output = "minecraft:stick",
-        ratio = 2,
-        threshold = 250,
-        craftType = 2,
-        maxCraft = 100
-    },
-    {
-        input = "minecraft:oak_log",
-        output = "minecraft:oak_planks",
-        ratio = 1,
-        threshold = 250,
-        craftType = 2,
-        maxCraft = 100
-    },
-    
-    {
-        input = "minecraft:iron_ingot",
-        output = "minecraft:bucket",
-        ratio = 3,
-        threshold = 10,
-        craftType = 2,
-        maxCraft = 16
-    }
     --[[
     Ex: Minimum 3 buckets 
     {
@@ -101,7 +76,7 @@ while true do
 
         -- TYPE 2 : Always keep <number> of <block>
         if craft.craftType == 2 then
-            amount = craft.threshold - outputCount
+            amount = math.min(craft.maxCraft, craft.threshold - outputCount)
 
             if amount > 0 and not crafting then
                 local ok, job = pcall(ME.craftItem, { name = craft.output, count = amount })
